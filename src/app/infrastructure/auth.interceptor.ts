@@ -1,10 +1,10 @@
-import { inject } from '@angular/core';
 import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-  const token = authService.token(); // тут напрямую из сервиса берем значение, не ходим лишний раз ни в какое хранилище
+  const token = authService.token();
 
   if (token) {
     const reqAuth = req.clone({
