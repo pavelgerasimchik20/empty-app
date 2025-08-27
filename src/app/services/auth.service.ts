@@ -7,19 +7,21 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private _isAuthenticated = signal(false);
   isAuthenticated = this._isAuthenticated.asReadonly(); // это наружу для чтения, чтобы не хранить например в локалсторе и читать из него 
-  // плюс инкапсулирую и делаю неизменяемый Signal 
+  // плюс инкапсулирую и делаю неизменяемый Signal
   private _token = signal<string | null>(null);
   token = this._token.asReadonly(); // та же причина, но можно организовать хранение в куках, локалсторе и др.
 
   constructor(private http: HttpClient) {}
 
-  login(login: string, password: string): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(
-      'https://api.teyca.ru/test-auth-only',
+  login(login: string, password: string): Observable<{ auth_token: string }> {
+    return this.http.post<{ auth_token: string }>(
+      '/api/test-auth-only',
       { login, password }
     ).pipe(
       tap(res => {
-        this._token.set(res.token);
+        console.log("response: ", res)
+        console.log("token: ", res.auth_token)
+        this._token.set(res.auth_token);
         this._isAuthenticated.set(true);
       })
     );
