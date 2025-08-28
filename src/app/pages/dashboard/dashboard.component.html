@@ -1,1 +1,64 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h2>Dashboard</h2>
+
+  <!-- Search -->
+  <div class="search-container">
+    <select [(ngModel)]="searchField" class="search-select">
+      <option *ngFor="let field of searchableFields" [value]="field">
+        {{ getFieldDisplayName(field) }}
+      </option>
+    </select>
+
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      [placeholder]="'type ' + getFieldDisplayName(searchField())"
+      class="search-input"
+    />
+
+    <button (click)="onSearch()" class="search-btn">Search</button>
+    <button (click)="clearSearch()" class="clear-btn">Clear</button>
+  </div>
+
+  <!-- List of clients -->
+  <div class="table-container">
+    <h3>List of clients</h3>
+
+    <div *ngIf="loading()" class="loading">Loading...</div>
+
+    <div *ngIf="error()" class="error">
+      {{ error() }}
+    </div>
+
+    <table *ngIf="!loading() && cards().length > 0" class="clients-table">
+      <thead>
+        <tr>
+          <th (click)="sortBy('user_id')">Id</th>
+          <th (click)="sortBy('fio')">Name</th>
+          <th (click)="sortBy('phone')">Phone</th>
+          <th (click)="sortBy('email')">Email</th>
+          <th (click)="sortBy('gender')">Gender</th>
+          <th (click)="sortBy('bonus')">Bonus</th>
+          <th (click)="sortBy('city')">City</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let card of cards()">
+          <td>{{ card.user_id }}</td>
+          <td>{{ card.fio }}</td>
+          <td>{{ card.phone || "-" }}</td>
+          <td>{{ card.email }}</td>
+          <td>{{ card.gender || "-" }}</td>
+          <td>{{ card.bonus || "0" }}</td>
+          <td>{{ card.city || "-" }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!loading() && cards().length === 0" class="no-data">
+      no data
+    </div>
+  </div>
+
+  <button (click)="logout()" class="logout-btn">Log out</button>
+</div>
