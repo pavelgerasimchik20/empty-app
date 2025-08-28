@@ -23,6 +23,7 @@
   <!-- List of clients -->
   <div class="table-container">
     <h3>List of clients</h3>
+    <h6>( to sort click on name of field )</h6>
 
     <div *ngIf="loading()" class="loading">Loading...</div>
 
@@ -33,13 +34,13 @@
     <table *ngIf="!loading() && cards().length > 0" class="clients-table">
       <thead>
         <tr>
-          <th (click)="sortBy('user_id')">Id</th>
-          <th (click)="sortBy('fio')">Name</th>
-          <th (click)="sortBy('phone')">Phone</th>
-          <th (click)="sortBy('email')">Email</th>
-          <th (click)="sortBy('gender')">Gender</th>
-          <th (click)="sortBy('bonus')">Bonus</th>
-          <th (click)="sortBy('city')">City</th>
+          <th (click)="sortBy('user_id')">Id <span *ngIf="sortField() === 'user_id'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
+          <th (click)="sortBy('fio')">Name <span *ngIf="sortField() === 'fio'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
+          <th (click)="sortBy('phone')">Phone <span *ngIf="sortField() === 'phone'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
+          <th (click)="sortBy('email')">Email <span *ngIf="sortField() === 'email'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
+          <th (click)="sortBy('gender')">Gender <span *ngIf="sortField() === 'gender'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
+          <th (click)="sortBy('bonus')">Bonus <span *ngIf="sortField() === 'bonus'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
+          <th (click)="sortBy('city')">City <span *ngIf="sortField() === 'city'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
         </tr>
       </thead>
       <tbody>
