@@ -10,4 +10,34 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+  font-family: 'Inter', 'Arial', sans-serif;
+}
+
+body {
+  background: linear-gradient(-45deg, 
+    #ecf0f1, 
+    #34495e, 
+    #7f8c8d, 
+    #bdc3c7,
+    #ecf0f1,
+    #bdc3c7,
+    #7f8c8d,
+    #34495e,
+    #bdc3c7,
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
