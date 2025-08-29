@@ -3,11 +3,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { CreateClientModalComponent } from '../../components/create-client-modal/create-client-modal.component';
 import { SearchHelperService } from '../../helpers/search-helper.service';
 import { Card } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { CardsService } from '../../services/cards.service';
-import { CreateClientModalComponent } from '../../components/create-client-modal/create-client-modal.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -81,7 +81,6 @@ export class DashboardComponent implements OnInit {
         this.closePushModal();
       },
     });
-    
   }
 
   closePushModal() {

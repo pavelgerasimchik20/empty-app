@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   private formBuilder = inject(FormBuilder);
@@ -17,7 +17,7 @@ export class LoginComponent {
 
   form = this.formBuilder.group({
     login: ['', Validators.required],
-    password: ['', [ Validators.required, Validators.minLength(6) ]]
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   onSubmit() {
@@ -28,7 +28,7 @@ export class LoginComponent {
     this.auth.login(login!, password!).subscribe({
       // считаю важным не проводить манипуляций с токеном здесь, пусть за него отвечает auth service
       next: () => this.router.navigate(['/dashboard']),
-      error: err => console.error('Auth error', err)
+      error: (err) => console.error('Auth error', err),
     });
   }
 }

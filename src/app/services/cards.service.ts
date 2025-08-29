@@ -4,7 +4,6 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SearchHelperService } from '../helpers/search-helper.service';
 import { CardsResponse, CreateCardRequest } from '../models/user.model';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +19,6 @@ export class CardsService {
     limit: number = 20,
     offset: number = 0
   ): Observable<CardsResponse> {
-
     if (!this.token) {
       throw new Error('token is not found');
     }
@@ -34,9 +32,12 @@ export class CardsService {
       params = params.set('search', searchString);
     }
 
-    return this.http.get<CardsResponse>(`${this.baseUrl}/${this.token}/passes`, {
-      params,
-    });
+    return this.http.get<CardsResponse>(
+      `${this.baseUrl}/${this.token}/passes`,
+      {
+        params,
+      }
+    );
   }
 
   searchByField(
@@ -53,7 +54,6 @@ export class CardsService {
   }
 
   sendPush(userId: string, message: string) {
-    
     const url = `${this.baseUrl}/${this.token}/message/push`;
 
     const now = new Date();
