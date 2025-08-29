@@ -13,7 +13,6 @@ export class AuthService {
       .post<{ auth_token: string }>('/api/test-auth-only', { login, password })
       .pipe(
         tap((res) => {
-          console.log('token: ', res.auth_token);
           const token = res.auth_token;
           this.setToken(token);
         })

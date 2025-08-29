@@ -64,7 +64,6 @@ export class CardsService {
       date_start: now.toISOString(),
       push_message: message,
     };
-    console.log('BODY:', body);
 
     return this.http.post(url, body, {
       headers: { 'Content-Type': 'application/json; charset=utf-8' },

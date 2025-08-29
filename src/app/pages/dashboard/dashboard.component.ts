@@ -64,7 +64,6 @@ export class DashboardComponent implements OnInit {
 
   openPushModal(client: Card) {
     this.selectedClient.set(client);
-    console.log(client);
     this.showPushModal.set(true);
   }
 
