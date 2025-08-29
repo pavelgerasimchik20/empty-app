@@ -16,7 +16,6 @@ import { SearchHelperService } from '../../helpers/search-helper.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-
   private auth = inject(AuthService);
   private router = inject(Router);
   private cardsService = inject(CardsService);
@@ -26,6 +25,9 @@ export class DashboardComponent implements OnInit {
   cards = signal<Card[]>([]);
   loading = signal(true);
   error = signal<string | null>(null);
+  pushTitle = signal<string>('')
+  pushBody = signal<string>('')
+
 
   searchTerm = signal('');
   searchField = signal('user_id');
@@ -33,6 +35,9 @@ export class DashboardComponent implements OnInit {
 
   sortField = signal<string | null>(null);
   sortDirection = signal<'asc' | 'desc'>('asc');
+
+  selectedClient = signal<any | null>(null);
+  showPushModal = signal<boolean>(false);
 
   ngOnInit() {
     this.loadAllCards();
@@ -55,6 +60,30 @@ export class DashboardComponent implements OnInit {
       this.loading.set(false);
     }
   }
+  openPushModal(client: Card) {
+    console.log("openPushModal click")
+    this.selectedClient.set(client);
+    this.showPushModal.set(true);
+  }
+
+  async sendPush() {
+    const client = this.selectedClient();
+    if (!client) return;
+    this.cardsService.sendPush([client.id], this.pushTitle(), this.pushBody()).subscribe({
+      next: () => {
+        alert('PUSH has been sent!');
+        this.closePushModal();
+      },
+      error: () => alert('error utlil PUSH sending')
+    });
+    this.showPushModal.set(false);
+  }
+
+  closePushModal() {
+    this.showPushModal.set(false);
+    this.pushTitle.set('');
+    this.pushBody.set('');
+  }
 
   async onSearch() {
     if (!this.searchTerm().trim()) {
@@ -65,7 +94,7 @@ export class DashboardComponent implements OnInit {
     try {
       this.loading.set(true);
       this.error.set(null);
-      
+
       const response = await lastValueFrom(
         this.cardsService.searchByField(
           this.searchField(),
@@ -74,7 +103,7 @@ export class DashboardComponent implements OnInit {
           0
         )
       );
-      
+
       this.cards.set(response.passes || []);
     } catch (err: any) {
       console.error('Error searching cards:', err);
@@ -86,15 +115,15 @@ export class DashboardComponent implements OnInit {
 
   getFieldDisplayName(field: string): string {
     const fieldNames: { [key: string]: string } = {
-      'email': 'email',
-      'phone': 'phone',
-      'fio': 'name',
-      'user_id': 'id',
-      'gender': 'gender',
-      'city': 'city',
-      'bonus': 'bonus'
+      email: 'email',
+      phone: 'phone',
+      fio: 'name',
+      user_id: 'id',
+      gender: 'gender',
+      city: 'city',
+      bonus: 'bonus',
     };
-    
+
     return fieldNames[field] || field;
   }
 

@@ -50,4 +50,12 @@ export class CardsService {
 
     return this.getCards([{ field, value }], limit, offset);
   }
+
+  sendPush(userIds: number[], title: string, message: string) {
+    return this.http.post('/api/v1/push/send', {
+      user_ids: userIds,
+      title,
+      message,
+    });
+  }
 }

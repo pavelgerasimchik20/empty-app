@@ -34,17 +34,52 @@
     <table *ngIf="!loading() && cards().length > 0" class="clients-table">
       <thead>
         <tr>
-          <th (click)="sortBy('user_id')">Id <span *ngIf="sortField() === 'user_id'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
-          <th (click)="sortBy('fio')">Name <span *ngIf="sortField() === 'fio'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
-          <th (click)="sortBy('phone')">Phone <span *ngIf="sortField() === 'phone'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
-          <th (click)="sortBy('email')">Email <span *ngIf="sortField() === 'email'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
-          <th (click)="sortBy('gender')">Gender <span *ngIf="sortField() === 'gender'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
-          <th (click)="sortBy('bonus')">Bonus <span *ngIf="sortField() === 'bonus'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
-          <th (click)="sortBy('city')">City <span *ngIf="sortField() === 'city'">{{ sortDirection() === 'asc' ? '▲' : '▼' }}</span></th>
+          <th (click)="sortBy('user_id')">
+            Id
+            <span *ngIf="sortField() === 'user_id'">{{
+              sortDirection() === "asc" ? "▲" : "▼"
+            }}</span>
+          </th>
+          <th (click)="sortBy('fio')">
+            Name
+            <span *ngIf="sortField() === 'fio'">{{
+              sortDirection() === "asc" ? "▲" : "▼"
+            }}</span>
+          </th>
+          <th (click)="sortBy('phone')">
+            Phone
+            <span *ngIf="sortField() === 'phone'">{{
+              sortDirection() === "asc" ? "▲" : "▼"
+            }}</span>
+          </th>
+          <th (click)="sortBy('email')">
+            Email
+            <span *ngIf="sortField() === 'email'">{{
+              sortDirection() === "asc" ? "▲" : "▼"
+            }}</span>
+          </th>
+          <th (click)="sortBy('gender')">
+            Gender
+            <span *ngIf="sortField() === 'gender'">{{
+              sortDirection() === "asc" ? "▲" : "▼"
+            }}</span>
+          </th>
+          <th (click)="sortBy('bonus')">
+            Bonus
+            <span *ngIf="sortField() === 'bonus'">{{
+              sortDirection() === "asc" ? "▲" : "▼"
+            }}</span>
+          </th>
+          <th (click)="sortBy('city')">
+            City
+            <span *ngIf="sortField() === 'city'">{{
+              sortDirection() === "asc" ? "▲" : "▼"
+            }}</span>
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let card of cards()">
+        <tr *ngFor="let card of cards()" (click)="openPushModal(card)">
           <td>{{ card.user_id }}</td>
           <td>{{ card.fio }}</td>
           <td>{{ card.phone || "-" }}</td>
@@ -60,6 +95,18 @@
       no data
     </div>
   </div>
+
+  <div class="modal" *ngIf="showPushModal()">
+  <div class="modal-content">
+    <h3>PUSH message to client: {{ selectedClient()?.fio }}</h3>
+    <input [(ngModel)]="pushTitle" placeholder="Title" />
+    <textarea [(ngModel)]="pushBody" placeholder="Message"></textarea>
+    <div class="modal-actions">
+      <button (click)="sendPush()">Send</button>
+      <button (click)="closePushModal()">Cancel</button>
+    </div>
+  </div>
+</div>
 
   <button (click)="logout()" class="logout-btn">Log out</button>
 </div>
