@@ -1,0 +1,109 @@
+@if (showModal) {
+<div class="modal-overlay" (click)="close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Create New Client</h3>
+      <button class="close-btn" (click)="close()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <app-custom-input
+            formControlName="first_name"
+            label="First Name"
+            placeholder="Enter first name"
+            [error]="clientForm.get('first_name')?.errors ? 'First name is required' : ''">
+          </app-custom-input>
+
+          <app-custom-input
+            formControlName="last_name"
+            label="Last Name"
+            placeholder="Enter last name"
+            [error]="clientForm.get('last_name')?.errors ? 'Last name is required' : ''">
+          </app-custom-input>
+        </div>
+
+        <app-custom-input
+          formControlName="pat_name"
+          label="Patronymic"
+          placeholder="Enter patronymic">
+        </app-custom-input>
+
+        <app-custom-input
+          formControlName="phone"
+          label="Phone"
+          placeholder="79876543211"
+          type="tel"
+          [error]="phoneError">
+        </app-custom-input>
+
+        <app-custom-input
+          formControlName="email"
+          label="Email"
+          placeholder="support@teyca.ru"
+          type="email"
+          [error]="emailError">
+        </app-custom-input>
+
+        <app-custom-input
+          formControlName="birthday"
+          label="Birthday"
+          type="date">
+        </app-custom-input>
+
+        <div class="form-group">
+          <label>Gender</label>
+          <select formControlName="gender" class="form-control">
+            <option value="">Select gender</option>
+            <option value="м">Male</option>
+            <option value="ж">Female</option>
+          </select>
+        </div>
+
+        <app-custom-input
+          formControlName="barcode"
+          label="Barcode"
+          placeholder="0000001">
+        </app-custom-input>
+
+        <app-custom-input
+          formControlName="discount"
+          label="Discount"
+          placeholder="10%">
+        </app-custom-input>
+
+        <app-custom-input
+          formControlName="bonus"
+          label="Bonus"
+          type="number"
+          placeholder="200">
+        </app-custom-input>
+
+        <app-custom-input
+          formControlName="loyalty_level"
+          label="Loyalty Level"
+          placeholder="Серебряный">
+        </app-custom-input>
+
+        @if (error) {
+          <div class="error-message">
+            {{ error }}
+          </div>
+        }
+
+        <div class="modal-actions">
+          <button type="button" (click)="close()" class="btn btn-secondary">Cancel</button>
+          <button type="submit" [disabled]="clientForm.invalid || loading" class="btn btn-primary">
+            @if (loading) {
+              Creating...
+            } @else {
+              Create Client
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+}

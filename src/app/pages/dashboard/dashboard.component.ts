@@ -3,15 +3,16 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { SearchHelperService } from '../../helpers/search-helper.service';
 import { Card } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { CardsService } from '../../services/cards.service';
-import { SearchHelperService } from '../../helpers/search-helper.service';
+import { CreateClientModalComponent } from '../../components/create-client-modal/create-client-modal.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CreateClientModalComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
@@ -21,16 +22,15 @@ export class DashboardComponent implements OnInit {
   private cardsService = inject(CardsService);
   private searchHelper = inject(SearchHelperService);
 
-  token = signal(localStorage.getItem('token'));
+  token = signal<string | null>(localStorage.getItem('token'));
   cards = signal<Card[]>([]);
-  loading = signal(true);
+  loading = signal<boolean>(true);
   error = signal<string | null>(null);
-  pushTitle = signal<string>('')
-  pushBody = signal<string>('')
+  pushTitle = signal<string>('');
+  pushBody = signal<string>('');
 
-
-  searchTerm = signal('');
-  searchField = signal('user_id');
+  searchTerm = signal<string>('');
+  searchField = signal<string>('user_id');
   searchableFields = this.searchHelper.getSearchableFields();
 
   sortField = signal<string | null>(null);
@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit {
 
   selectedClient = signal<any | null>(null);
   showPushModal = signal<boolean>(false);
+  showCreateModal = signal<boolean>(false);
 
   ngOnInit() {
     this.loadAllCards();
@@ -60,23 +61,28 @@ export class DashboardComponent implements OnInit {
       this.loading.set(false);
     }
   }
+
   openPushModal(client: Card) {
-    console.log("openPushModal click")
     this.selectedClient.set(client);
+    console.log(client);
     this.showPushModal.set(true);
   }
 
   async sendPush() {
     const client = this.selectedClient();
     if (!client) return;
-    this.cardsService.sendPush([client.id], this.pushTitle(), this.pushBody()).subscribe({
+    this.cardsService.sendPush(client.user_id, this.pushBody()).subscribe({
       next: () => {
         alert('PUSH has been sent!');
         this.closePushModal();
       },
-      error: () => alert('error utlil PUSH sending')
+      error: (error) => {
+        console.error('error:', error);
+        alert('error utlil PUSH sending');
+        this.closePushModal();
+      },
     });
-    this.showPushModal.set(false);
+    
   }
 
   closePushModal() {
@@ -162,5 +168,18 @@ export class DashboardComponent implements OnInit {
     });
 
     this.cards.set(sorted);
+  }
+
+  openCreateModal() {
+    this.showCreateModal.set(true);
+  }
+
+  onClientCreated() {
+    this.showCreateModal.set(false);
+    this.loadAllCards();
+  }
+
+  onModalClosed() {
+    this.showCreateModal.set(false);
   }
 }

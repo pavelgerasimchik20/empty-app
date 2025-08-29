@@ -1,5 +1,10 @@
 <div class="dashboard-container">
-  <h2>Dashboard</h2>
+  <div class="header-actions">
+    <h2>Dashboard</h2>
+    <button (click)="openCreateModal()" class="btn btn-primary">
+      Create New Client
+    </button>
+  </div>
 
   <!-- Search -->
   <div class="search-container">
@@ -97,16 +102,23 @@
   </div>
 
   <div class="modal" *ngIf="showPushModal()">
-  <div class="modal-content">
-    <h3>PUSH message to client: {{ selectedClient()?.fio }}</h3>
-    <input [(ngModel)]="pushTitle" placeholder="Title" />
-    <textarea [(ngModel)]="pushBody" placeholder="Message"></textarea>
-    <div class="modal-actions">
-      <button (click)="sendPush()">Send</button>
-      <button (click)="closePushModal()">Cancel</button>
+    <div class="modal-content">
+      <h3>PUSH message to client: {{ selectedClient()?.fio }}</h3>
+      <input [(ngModel)]="pushTitle" placeholder="Title" />
+      <textarea [(ngModel)]="pushBody" placeholder="Message"></textarea>
+      <div class="modal-actions">
+        <button (click)="sendPush()">Send</button>
+        <button (click)="closePushModal()">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
+
+  <app-create-client-modal
+    [isOpen]="showCreateModal()"
+    (clientCreated)="onClientCreated()"
+    (closed)="onModalClosed()"
+  >
+  </app-create-client-modal>
 
   <button (click)="logout()" class="logout-btn">Log out</button>
 </div>
