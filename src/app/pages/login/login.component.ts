@@ -26,7 +26,6 @@ export class LoginComponent {
     const { login, password } = this.form.value;
 
     this.auth.login(login!, password!).subscribe({
-      // считаю важным не проводить манипуляций с токеном здесь, пусть за него отвечает auth service
       next: () => this.router.navigate(['/dashboard']),
       error: (err) => console.error('Auth error', err),
     });
