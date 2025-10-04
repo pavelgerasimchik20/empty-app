@@ -7,7 +7,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   template: `
     <div class="form-group">
       @if (label) {
-      <label>{{ label }}</label>
+      <label class="label">{{ label }}</label>
       }
 
       <input
@@ -29,6 +29,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     `
       .form-group {
         margin-bottom: 1rem;
+      }
+      .label {
+        color: #34495e;
       }
       .form-control {
         width: 100%;
