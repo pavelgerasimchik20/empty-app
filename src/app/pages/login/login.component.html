@@ -1,19 +1,58 @@
-<div class="login-container">
-    
-  <h2>Welcome</h2>
-
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-
-    <label>
-      Login:
-      <input type="text" formControlName="login" />
-    </label>
-
-    <label>
-      Password:
-      <input type="password" formControlName="password" />
-    </label>
-
-    <button type="submit" [disabled]="form.invalid">Log in</button>
-  </form>
+<div class="login-page">
+  <div class="login-container"></div>
+  <div class="content-container">
+    <div class="loyalty-program-label">
+      <span class="title-base-text title-regular-text">Программа</span>
+      <span class="title-base-text title-bold-text">лояльности</span>
+    </div>
+    <div class="toggle-container">
+      <div class="toggle-options">
+        <div class="toggle-item">
+          <img
+            src="../../../assets/svg/percent.svg"
+            alt="bonus"
+          />
+          <span class="text">Бонусные и скидочные программы</span>
+        </div>
+        <div class="toggle-item">
+          <img
+            src="../../../assets/svg/menu.svg"
+            alt="menu"
+          />
+          <span class="text">Приветственные бонусы и уровни</span>
+        </div>
+        <div class="toggle-item">
+          <img
+            src="../../../assets/svg/fire.svg"
+            alt="fire"
+          />
+          <span class="text">Правила сгорания и подтверждения списаний</span>
+        </div>
+        <div class="toggle-item">
+          <img
+            src="../../../assets/svg/shield.svg"
+            alt="shield"
+          />
+          <span class="text">Механизмы защиты от злоупотреблений</span>
+        </div>
+      </div>
+      <div class="toggle-buttons">
+        <button class="nav-btn prev">←</button>
+        <button class="nav-btn next">→</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label>
+    Login:
+    <input type="text" formControlName="login" />
+  </label>
+
+  <label>
+    Password:
+    <input type="password" formControlName="password" />
+  </label>
+  <button type="submit" [disabled]="form.invalid">Log in</button>
+</form> -->
