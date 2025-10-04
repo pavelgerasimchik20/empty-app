@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -6,22 +6,22 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   standalone: true,
   template: `
     <div class="form-group">
-      @if (label) {
-      <label class="label">{{ label }}</label>
+      @if (label()) {
+      <label class="label">{{ label() }}</label>
       }
 
       <input
-        [type]="type"
+        [type]="type()"
         [value]="value"
         (input)="onInput($event)"
         (blur)="onBlur()"
-        [placeholder]="placeholder"
+        [placeholder]="placeholder()"
         [disabled]="disabled"
         class="form-control"
       />
 
-      @if (error) {
-      <div class="error-text">{{ error }}</div>
+      @if (error()) {
+      <div class="error-text">{{ error() }}</div>
       }
     </div>
   `,
@@ -55,10 +55,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class CustomInputComponent implements ControlValueAccessor {
-  @Input() label: string = '';
-  @Input() placeholder: string = '';
-  @Input() type: string = 'text';
-  @Input() error: string = '';
+  label = input<string>('');
+  placeholder = input<string>('');
+  type = input<string>('text');
+  error = input<string>('');
 
   value: any = '';
   disabled: boolean = false;

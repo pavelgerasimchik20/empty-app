@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, effect, inject, input, output } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -22,16 +22,20 @@ export class CreateClientModalComponent {
   private cardsService = inject(CardsService);
   private destroy$ = new Subject<void>();
 
-  @Input() set isOpen(value: boolean) {
-    if (value) {
-      this.open();
-    } else {
-      this.close();
-    }
+  isOpen = input<boolean>(false);
+
+  constructor() {
+    effect(() => {
+      if (this.isOpen()) {
+        this.open();
+      } else {
+        this.close();
+      }
+    });
   }
 
-  @Output() clientCreated = new EventEmitter<void>();
-  @Output() closed = new EventEmitter<void>();
+  clientCreated = output<void>();
+  closed = output<void>();
 
   showModal = false;
   loading = false;
@@ -106,6 +110,8 @@ export class CreateClientModalComponent {
 
   getFieldError(fieldName: string): string {
     const control = this.clientForm.get(fieldName);
+
+    // проверяем control.pristine - ошибки покажутся только после того, как поле было изменено, поэтому по пустому полю проверки нет и соответственнно ошибки тоже
     if (!control || !control.errors || control.pristine) {
       return '';
     }
