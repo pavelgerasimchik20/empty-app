@@ -1,6 +1,12 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { CardsService } from '../../services/cards.service';
 import { CustomInputComponent } from '../input/input.component';
 
@@ -9,11 +15,12 @@ import { CustomInputComponent } from '../input/input.component';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, CustomInputComponent],
   templateUrl: './create-client-modal.component.html',
-  styleUrls: ['./create-client-modal.component.css']
+  styleUrls: ['./create-client-modal.component.css'],
 })
 export class CreateClientModalComponent {
   private fb = inject(FormBuilder);
   private cardsService = inject(CardsService);
+  private destroy$ = new Subject<void>();
 
   @Input() set isOpen(value: boolean) {
     if (value) {
@@ -41,7 +48,7 @@ export class CreateClientModalComponent {
     barcode: [''],
     discount: [''],
     bonus: [0],
-    loyalty_level: ['']
+    loyalty_level: [''],
   });
 
   open() {
@@ -49,7 +56,7 @@ export class CreateClientModalComponent {
     this.error = null;
     this.clientForm.reset({
       bonus: 0,
-      template: 'Тестовый'
+      template: 'Тестовый',
     });
   }
 
@@ -66,22 +73,30 @@ export class CreateClientModalComponent {
 
     const formData = {
       template: 'Тестовый',
-      ...this.clientForm.value
+      ...this.clientForm.value,
     };
 
-    this.cardsService.createCard(formData).subscribe({
-      next: () => {
-        this.loading = false;
-        this.showModal = false;
-        this.clientCreated.emit();
-        alert('Client created successfully!');
-      },
-      error: (err) => {
-        this.loading = false;
-        this.error = 'Error creating client';
-        console.error('Create client error:', err);
-      }
-    });
+    this.cardsService
+      .createCard(formData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.loading = false;
+          this.showModal = false;
+          this.clientCreated.emit();
+          alert('Client created successfully!');
+        },
+        error: (err) => {
+          this.loading = false;
+          this.error = 'Error creating client';
+          console.error('Create client error:', err);
+        },
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   get phoneError(): string {

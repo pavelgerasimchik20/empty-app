@@ -21,7 +21,7 @@ export class AuthService {
 
   private setToken(token: string): void {
     this._token.set(token);
-    localStorage.setItem('token', token); // как вариант решаю хранить в локал сторе
+    localStorage.setItem('token', token);
   }
 
   private getStoredToken(): string | null {

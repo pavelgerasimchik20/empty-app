@@ -31,3 +31,9 @@ export interface CreateCardRequest {
   bonus?: number;
   loyalty_level?: string;
 }
+
+export interface PushMessage {
+  user_id: string;
+  date_start: string;
+  push_message: string;
+}

@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SearchHelperService } from '../helpers/search-helper.service';
-import { CardsResponse, CreateCardRequest } from '../models/user.model';
+import { CardsResponse, CreateCardRequest, PushMessage } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -53,19 +53,19 @@ export class CardsService {
     return this.getCards([{ field, value }], limit, offset);
   }
 
-  sendPush(userId: string, message: string) {
+  sendPush(userId: string, message: string): Observable<PushMessage> {
     const url = `${this.baseUrl}/${this.token}/message/push`;
 
     const now = new Date();
     now.setMinutes(now.getMinutes() + 1);
 
-    const body = {
+    const body: PushMessage = {
       user_id: userId.toString(),
       date_start: now.toISOString(),
       push_message: message,
     };
 
-    return this.http.post(url, body, {
+    return this.http.post<PushMessage>(url, body, {
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
     });
   }

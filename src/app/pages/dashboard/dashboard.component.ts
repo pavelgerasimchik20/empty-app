@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
+import { first, lastValueFrom } from 'rxjs';
 import { CreateClientModalComponent } from '../../components/create-client-modal/create-client-modal.component';
 import { SearchHelperService } from '../../helpers/search-helper.service';
 import { Card } from '../../models/user.model';
@@ -70,17 +70,20 @@ export class DashboardComponent implements OnInit {
   async sendPush() {
     const client = this.selectedClient();
     if (!client) return;
-    this.cardsService.sendPush(client.user_id, this.pushBody()).subscribe({
-      next: () => {
-        alert('PUSH has been sent!');
-        this.closePushModal();
-      },
-      error: (error) => {
-        console.error('error:', error);
-        alert('error utlil PUSH sending');
-        this.closePushModal();
-      },
-    });
+    this.cardsService
+      .sendPush(client.user_id, this.pushBody())
+      .pipe(first()) // гарантируем отписку после отправки , можно также использовать take(1), в случае ошибки отписка тоже произойдёт
+      .subscribe({
+        next: () => {
+          alert('PUSH has been sent!');
+          this.closePushModal();
+        },
+        error: (error) => {
+          console.error('error:', error);
+          alert('error utlil PUSH sending');
+          this.closePushModal();
+        },
+      });
   }
 
   closePushModal() {

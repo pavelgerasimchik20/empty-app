@@ -1,8 +1,0 @@
-@defer {
-<ul>
-  <p>Selected user name: {{ selectedUser().name }}</p>
-  @for (user of users(); track user.id) {
-  <li (click)="selectUser(user)">{{ user.name }} {{ user.email }}</li>
-  }
-</ul>
-} @loading { Loading ... }
