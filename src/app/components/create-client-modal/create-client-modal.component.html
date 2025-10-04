@@ -13,21 +13,24 @@
             formControlName="first_name"
             label="First Name"
             placeholder="Enter first name"
-            [error]="clientForm.get('first_name')?.errors ? 'First name is required' : ''">
+            [error]="getFieldError('first_name')"
+          >
           </app-custom-input>
 
           <app-custom-input
             formControlName="last_name"
             label="Last Name"
             placeholder="Enter last name"
-            [error]="clientForm.get('last_name')?.errors ? 'Last name is required' : ''">
+            [error]="getFieldError('last_name')"
+          >
           </app-custom-input>
         </div>
 
         <app-custom-input
           formControlName="pat_name"
           label="Patronymic"
-          placeholder="Enter patronymic">
+          placeholder="Enter patronymic"
+        >
         </app-custom-input>
 
         <app-custom-input
@@ -35,7 +38,8 @@
           label="Phone"
           placeholder="79876543211"
           type="tel"
-          [error]="phoneError">
+          [error]="getFieldError('phone')"
+        >
         </app-custom-input>
 
         <app-custom-input
@@ -43,13 +47,15 @@
           label="Email"
           placeholder="support@teyca.ru"
           type="email"
-          [error]="emailError">
+          [error]="getFieldError('email')"
+        >
         </app-custom-input>
 
         <app-custom-input
           formControlName="birthday"
           label="Birthday"
-          type="date">
+          type="date"
+        >
         </app-custom-input>
 
         <div class="form-group">
@@ -64,42 +70,48 @@
         <app-custom-input
           formControlName="barcode"
           label="Barcode"
-          placeholder="0000001">
+          placeholder="0000001"
+        >
         </app-custom-input>
 
         <app-custom-input
           formControlName="discount"
           label="Discount"
-          placeholder="10%">
+          placeholder="10%"
+        >
         </app-custom-input>
 
         <app-custom-input
           formControlName="bonus"
           label="Bonus"
           type="number"
-          placeholder="200">
+          placeholder="200"
+        >
         </app-custom-input>
 
         <app-custom-input
           formControlName="loyalty_level"
           label="Loyalty Level"
-          placeholder="Серебряный">
+          placeholder="Серебряный"
+        >
         </app-custom-input>
 
         @if (error) {
-          <div class="error-message">
-            {{ error }}
-          </div>
+        <div class="error-message">
+          {{ error }}
+        </div>
         }
 
         <div class="modal-actions">
-          <button type="button" (click)="close()" class="btn btn-secondary">Cancel</button>
-          <button type="submit" [disabled]="clientForm.invalid || loading" class="btn btn-primary">
-            @if (loading) {
-              Creating...
-            } @else {
-              Create Client
-            }
+          <button type="button" (click)="close()" class="btn btn-secondary">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            [disabled]="clientForm.invalid || loading"
+            class="btn btn-primary"
+          >
+            @if (loading) { Creating... } @else { Create Client }
           </button>
         </div>
       </form>

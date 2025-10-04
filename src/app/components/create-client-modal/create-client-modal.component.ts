@@ -58,6 +58,11 @@ export class CreateClientModalComponent {
       bonus: 0,
       template: 'Тестовый',
     });
+
+    Object.keys(this.clientForm.controls).forEach((key) => {
+      this.clientForm.get(key)?.markAsPristine();
+      this.clientForm.get(key)?.markAsUntouched();
+    });
   }
 
   close() {
@@ -99,19 +104,37 @@ export class CreateClientModalComponent {
     this.destroy$.complete();
   }
 
-  get phoneError(): string {
-    const phoneControl = this.clientForm.get('phone');
-    if (phoneControl?.errors?.['pattern']) {
+  getFieldError(fieldName: string): string {
+    const control = this.clientForm.get(fieldName);
+    if (!control || !control.errors || control.pristine) {
+      return '';
+    }
+
+    const errors = control.errors;
+
+    if (errors['required']) {
+      return this.getRequiredErrorMessage(fieldName);
+    }
+
+    if (errors['pattern'] && fieldName === 'phone') {
       return 'Phone must be in format 7XXXXXXXXXX';
     }
+
+    if (errors['email'] && fieldName === 'email') {
+      return 'Please enter a valid email';
+    }
+
     return '';
   }
 
-  get emailError(): string {
-    const emailControl = this.clientForm.get('email');
-    if (emailControl?.errors?.['email']) {
-      return 'Please enter a valid email';
-    }
-    return '';
+  private getRequiredErrorMessage(fieldName: string): string {
+    const messages: { [key: string]: string } = {
+      first_name: 'First name is required',
+      last_name: 'Last name is required',
+      phone: 'Phone is required',
+      email: 'Email is required',
+    };
+
+    return messages[fieldName] || 'This field is required';
   }
 }
