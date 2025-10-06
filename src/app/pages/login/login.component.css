@@ -6,7 +6,129 @@
 
 .login-container {
   grid-column: span 5;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #ffffff;
+  align-content: center;
+}
+
+.welcome-section {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.welcome-title {
+  font-family: Manrope;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 135%;
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin: 0 0 8px 0;
+  color: #1a1a1a;
+}
+
+.welcome-subtitle {
+  font-family: Manrope;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 135%;
+  text-align: center;
+  color: #1a1a1a;
+  height: 1.5em;
+  opacity: 0.3;
+}
+
+.login-form {
+  margin-bottom: 24px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.form-input-transparent {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  font-size: 16px;
+  transition: border-color 1s;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.form-input-transparent:focus {
+  border-bottom-color: #1f1f1f;
+}
+
+.form-input-transparent.ng-invalid.ng-touched {
+  border-bottom-color: #dc3545;
+}
+
+.submit-btn {
+  font-family: Manrope;
+  width: 100%;
+  padding: 14px;
+  background: #1f1f1f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  /* font-size: 14px; не получается, совсем не виден */
+  line-height: 150%;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submit-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 24px 0;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e1e5e9;
+}
+
+.divider-text {
+  position: relative;
   background: white;
+  padding: 0 16px;
+  color: #666;
+  font-size: 14px;
+}
+
+.login-link {
+  text-align: center;
+}
+
+.login-link p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.login-bold {
+  color: #007bff;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .content-container {
@@ -16,18 +138,21 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 35px;
+  margin: 20px 20px 20px 20px;
+  border-radius: 22px;
+  /* не нашел этот радиус, наверное это картинка такая */
 }
 
 .loyalty-program-label {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
 }
 
 .title-base-text {
@@ -110,15 +235,67 @@
 }
 
 @media (max-width: 768px) {
-  .page {
-    grid-template-columns: 1fr;
+  .login-page {
+    display: flex;
   }
 
   .login-container {
-    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    padding: 24px 16px;
   }
 
   .content-container {
     display: none;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .welcome-section {
+    text-align: left;
+    margin-bottom: 32px;
+  }
+
+  .welcome-title {
+    text-align: left;
+    font-size: 28px;
+    margin: 20px 0 0 0;
+  }
+
+  .welcome-subtitle {
+    text-align: left;
+    font-size: 28px;
+  }
+
+  .login-form {
+    margin-top: 40%;
+  }
+
+  .submit-btn {
+    margin-top: 75%;
+  }
+}
+
+@media (max-width: 768px) and (max-height: 844px) {
+  .login-form {
+    margin-top: 30%;
+  }
+
+  .submit-btn {
+    margin-top: 50%;
+  }
+}
+
+@media (max-width: 768px) and (max-height: 740px) {
+  .login-form {
+    margin-top: 25%;
+  }
+
+  .submit-btn {
+    margin-top: 40%;
   }
 }

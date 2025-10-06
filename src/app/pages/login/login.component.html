@@ -1,5 +1,51 @@
 <div class="login-page">
-  <div class="login-container"></div>
+  <div class="login-container">
+    <div class="welcome-section">
+      <img src="../../../assets/svg/logo.svg" alt="logo" />
+      <h1 class="welcome-title">Добро пожаловать в Тейка</h1>
+      <p class="welcome-subtitle">Начните сегодня</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="input-group">
+        <input
+          type="text"
+          formControlName="login"
+          class="form-input-transparent"
+          placeholder="Номер телефона / Адрес эл. почты"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+        />
+      </div>
+
+      <div class="input-group">
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Введите пароль"
+          class="form-input-transparent"
+          autocomplete="new-password"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+        />
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="form.invalid">
+        Зарегистрироваться
+      </button>
+    </form>
+
+    <div class="divider">
+      <span class="divider-text">ИЛИ</span>
+    </div>
+
+    <div class="login-link">
+      <p>Уже есть аккаунт? <strong class="login-bold">Войти</strong></p>
+    </div>
+  </div>
   <div class="content-container">
     <div class="loyalty-program-label">
       <span class="title-base-text title-regular-text">Программа</span>
@@ -8,31 +54,19 @@
     <div class="toggle-container">
       <div class="toggle-options">
         <div class="toggle-item">
-          <img
-            src="../../../assets/svg/percent.svg"
-            alt="bonus"
-          />
+          <img src="../../../assets/svg/percent.svg" alt="bonus" />
           <span class="text">Бонусные и скидочные программы</span>
         </div>
         <div class="toggle-item">
-          <img
-            src="../../../assets/svg/menu.svg"
-            alt="menu"
-          />
+          <img src="../../../assets/svg/menu.svg" alt="menu" />
           <span class="text">Приветственные бонусы и уровни</span>
         </div>
         <div class="toggle-item">
-          <img
-            src="../../../assets/svg/fire.svg"
-            alt="fire"
-          />
+          <img src="../../../assets/svg/fire.svg" alt="fire" />
           <span class="text">Правила сгорания и подтверждения списаний</span>
         </div>
         <div class="toggle-item">
-          <img
-            src="../../../assets/svg/shield.svg"
-            alt="shield"
-          />
+          <img src="../../../assets/svg/shield.svg" alt="shield" />
           <span class="text">Механизмы защиты от злоупотреблений</span>
         </div>
       </div>
