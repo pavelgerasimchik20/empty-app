@@ -12,14 +12,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(44, 62, 80, 0.9);
+  background: #f8f9fa;
   z-index: -1;
 }
 
 .dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
-  color: #ecf0f1;
+  color: #2c3e50;
   padding: 20px;
   position: relative;
   z-index: 2;
@@ -31,7 +31,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,12 +39,13 @@
 }
 
 .modal-content {
-  background: #ecf0f1;
+  background: #ffffff;
   padding: 25px;
   border-radius: 12px;
   width: 400px;
   max-width: 90%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid #e9ecef;
   font-family: 'Inter', sans-serif;
 }
 
@@ -61,7 +62,7 @@
   width: 100%;
   margin: 10px 0;
   padding: 12px;
-  border: 2px solid #bdc3c7;
+  border: 2px solid #e9ecef;
   border-radius: 8px;
   font-size: 14px;
   outline: none;
@@ -78,7 +79,7 @@
 
 .modal-content input:focus,
 .modal-content textarea:focus {
-  border-color: #7f8c8d;
+  border-color: #b2e320;
   box-shadow: 0 0 0 3px rgba(127, 140, 141, 0.1);
 }
 
@@ -93,22 +94,22 @@
 }
 
 .modal-actions button:first-child {
-  background: #34495e;
+  background: #b2e320;
   color: #ecf0f1;
 }
 
 .modal-actions button:first-child:hover {
-  background: #2c3e50;
+  background: #afea00;
   transform: translateY(-1px);
 }
 
 .modal-actions button:last-child {
-  background: #bdc3c7;
-  color: #2c3e50;
+  background: #dc7d5d;
+  color: #ecf0f1;
 }
 
 .modal-actions button:last-child:hover {
-  background: #95a5a6;
+  background: #dc7d5d;
   transform: translateY(-1px);
 }
 
@@ -117,7 +118,7 @@ h2 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
   font-weight: 300;
-  color: #ecf0f1;
+  color: #92a068;
   letter-spacing: 1px;
 }
 
@@ -126,14 +127,14 @@ h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
   font-weight: 400;
-  color: #ecf0f1;
+  color: #92a068;
 }
 
 h6 {
   text-align: center;
   font-size: 0.9rem;
   margin-bottom: 2rem;
-  color: #bdc3c7;
+  color: #92a068;
   font-weight: 300;
 }
 
@@ -146,7 +147,7 @@ h6 {
 }
 
 .btn-primary {
-  background: linear-gradient(45deg, #34495e, #2c3e50);
+  background: linear-gradient(45deg, #c3d297, #a2d210);
   color: #ecf0f1;
   padding: 12px 24px;
   border: none;
@@ -157,9 +158,9 @@ h6 {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(45deg, #2c3e50, #34495e);
+  background: linear-gradient(45deg, #c3d297, #a2d210);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(44, 62, 80, 0.4);
+  box-shadow: 0 5px 15px rgba(164, 212, 6, 0.4);
 }
 
 .search-container {
@@ -193,7 +194,7 @@ h6 {
 .search-input:focus {
   outline: none;
   border-color: #7f8c8d;
-  box-shadow: 0 0 0 3px rgba(127, 140, 141, 0.1);
+  box-shadow: 0 0 0 3px #b2e320;
 }
 
 .search-btn, .clear-btn {
@@ -207,7 +208,7 @@ h6 {
 }
 
 .search-btn {
-  background: linear-gradient(45deg, #34495e, #2c3e50);
+  background: linear-gradient(45deg, #b2e320, #adbc82);
   color: #ecf0f1;
 }
 
@@ -222,13 +223,13 @@ h6 {
 }
 
 .table-container {
-  background: rgba(132, 158, 164, 0.95);
+  background: rgba(222, 223, 219, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 15px;
   padding: 25px;
   margin-bottom: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(211, 216, 203, 0.1);
 }
 
 .clients-table {
@@ -249,7 +250,7 @@ h6 {
 }
 
 .clients-table th {
-  background: linear-gradient(135deg, #34495e, #2c3e50);
+  background: linear-gradient(135deg, #b2e320, #b1c76e);
   color: #ecf0f1;
   font-weight: 500;
   text-transform: uppercase;
@@ -259,7 +260,7 @@ h6 {
 }
 
 .clients-table th:hover {
-  background: linear-gradient(135deg, #2c3e50, #34495e);
+  background: linear-gradient(135deg, #b2e320, #c2fe0b);
 }
 
 .clients-table tr {
@@ -298,7 +299,7 @@ h6 {
   display: block;
   margin: 0 auto;
   padding: 15px 30px;
-  background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+  background: linear-gradient(45deg, #c3d297, #b2e320);
   color: #ecf0f1;
   border: none;
   border-radius: 8px;
@@ -306,13 +307,13 @@ h6 {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
+  box-shadow: 0 4px 15px #b2e320;
 }
 
 .logout-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(149, 165, 166, 0.4);
-  background: linear-gradient(45deg, #7f8c8d, #95a5a6);
+  background: linear-gradient(45deg, #b2e320, #c3d297);
 }
 
 .logout-btn:active {
@@ -324,27 +325,27 @@ h6 {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .search-input {
     min-width: unset;
     width: 100%;
     max-width: 300px;
   }
-  
+
   .clients-table {
     font-size: 0.9rem;
   }
-  
+
   .clients-table th,
   .clients-table td {
     padding: 10px 8px;
   }
-  
+
   .header-actions {
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .btn-primary {
     width: 100%;
     text-align: center;
@@ -355,15 +356,15 @@ h6 {
   .dashboard-container {
     padding: 10px;
   }
-  
+
   .table-container {
     padding: 15px;
   }
-  
+
   h2 {
     font-size: 2rem;
   }
-  
+
   h3 {
     font-size: 1.5rem;
   }
