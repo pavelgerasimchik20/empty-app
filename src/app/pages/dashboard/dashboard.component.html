@@ -96,7 +96,7 @@
           <td>
             <svg
               class="delete-icon"
-              (click)="deleteCard(card.user_id)"
+              (click)="$event.stopPropagation(); deleteCard(card.user_id)"
               width="30"
               height="30"
               viewBox="0 0 24 24"

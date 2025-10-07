@@ -193,7 +193,7 @@ export class DashboardComponent implements OnInit {
           alert(`user has been deleted (user id: ${userId})`);
         },
         error: (err) => {
-          alert(`error:  ${err}`)
+          alert(`error:  ${err.message}`)
         }
       });
   }
