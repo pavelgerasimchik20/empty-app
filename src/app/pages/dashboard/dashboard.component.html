@@ -81,6 +81,7 @@
               sortDirection() === "asc" ? "▲" : "▼"
             }}</span>
           </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -92,6 +93,21 @@
           <td>{{ card.gender || "-" }}</td>
           <td>{{ card.bonus || "0" }}</td>
           <td>{{ card.city || "-" }}</td>
+          <td>
+            <svg
+              class="delete-icon"
+              (click)="deleteCard(card.user_id)"
+              width="30"
+              height="30"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                fill="currentColor"
+              />
+            </svg>
+          </td>
         </tr>
       </tbody>
     </table>

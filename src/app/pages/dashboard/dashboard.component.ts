@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { first, lastValueFrom } from 'rxjs';
+import { first, lastValueFrom, take } from 'rxjs';
 import { CreateClientModalComponent } from '../../components/create-client-modal/create-client-modal.component';
 import { SearchHelperService } from '../../helpers/search-helper.service';
 import { Card } from '../../models/user.model';
@@ -182,5 +182,19 @@ export class DashboardComponent implements OnInit {
 
   onModalClosed() {
     this.showCreateModal.set(false);
+  }
+
+  deleteCard(userId: number) {
+    this.cardsService
+      .deleteCard(userId.toString())
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          alert(`user has been deleted (user id: ${userId})`);
+        },
+        error: (err) => {
+          alert(`error:  ${err}`)
+        }
+      });
   }
 }

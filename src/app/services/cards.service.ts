@@ -73,4 +73,8 @@ export class CardsService {
   createCard(cardData: CreateCardRequest): Observable<any> {
     return this.http.post(`${this.baseUrl}/${this.token}/passes`, cardData);
   }
+
+  deleteCard(userId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${this.token}/passes/${userId}`)
+  }
 }

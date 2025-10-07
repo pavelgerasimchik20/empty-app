@@ -320,6 +320,19 @@ h6 {
   transform: translateY(0);
 }
 
+.delete-icon {
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  transition: color 0.3s;
+}
+
+.delete-icon:hover {
+  color: #e3606d;
+}
+
+
+
 @media (max-width: 768px) {
   .search-container {
     flex-direction: column;
