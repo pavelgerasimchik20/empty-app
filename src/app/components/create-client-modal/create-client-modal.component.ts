@@ -9,6 +9,7 @@ import {
 import { Subject, takeUntil } from 'rxjs';
 import { CardsService } from '../../services/cards.service';
 import { CustomInputComponent } from '../input/input.component';
+import { Card, CreateCardRequest } from '../../models/user.model';
 
 @Component({
   selector: 'app-create-client-modal',
@@ -23,6 +24,7 @@ export class CreateClientModalComponent {
   private destroy$ = new Subject<void>();
 
   isOpen = input<boolean>(false);
+  editClient = input<Card | null>(null);
 
   constructor() {
     effect(() => {
@@ -32,9 +34,17 @@ export class CreateClientModalComponent {
         this.close();
       }
     });
+
+    effect(() => {
+      const client = this.editClient();
+      if (client) {
+        this.populateForm(client);
+      }
+    });
   }
 
   clientCreated = output<void>();
+  clientUpdated = output<void>();
   closed = output<void>();
 
   showModal = false;
@@ -58,14 +68,38 @@ export class CreateClientModalComponent {
   open() {
     this.showModal = true;
     this.error = null;
-    this.clientForm.reset({
-      bonus: 0,
-      template: 'Тестовый',
-    });
+
+    const client = this.editClient();
+    if (!client) {
+      this.clientForm.reset({
+        bonus: 0,
+        template: 'Тестовый',
+      });
+    }
 
     Object.keys(this.clientForm.controls).forEach((key) => {
       this.clientForm.get(key)?.markAsPristine();
       this.clientForm.get(key)?.markAsUntouched();
+    });
+  }
+
+  // тут будет костыль небольшой, но чтобы не менять Card сейчас , некоторые поля при обновлении зачистим, просто чтобы реализовать update
+  // запрос работает корректно, но есть путаница с полями, нужно привести к одному типу если так переиспользовать модалку
+  populateForm(client: Card) {
+    const fioParts = client.fio?.split(' ') || ['', '', ''];
+
+    this.clientForm.patchValue({
+      first_name: fioParts[0] || '',
+      last_name: fioParts[1] || '',
+      pat_name: fioParts[2] || '',
+      phone: client.phone || '',
+      email: client.email || '',
+      birthday: '',
+      gender: client.gender || '',
+      barcode: '',
+      discount: '',
+      bonus: client.bonus ? parseInt(client.bonus) : 0,
+      loyalty_level: '',
     });
   }
 
@@ -80,27 +114,84 @@ export class CreateClientModalComponent {
     this.loading = true;
     this.error = null;
 
-    const formData = {
-      template: 'Тестовый',
-      ...this.clientForm.value,
-    };
+    const client = this.editClient();
+    const formData = this.prepareFormData();
 
+    if (client) {
+      this.updateClient(client.user_id, formData);
+    } else {
+      this.createClient(formData);
+    }
+  }
+
+  private prepareFormData() {
+    const formValue = this.clientForm.value;
+    const data: any = {};
+
+    Object.keys(formValue).forEach((key) => {
+      if (formValue[key] !== null && formValue[key] !== '') {
+        data[key] = formValue[key];
+      }
+    });
+
+    return data;
+  }
+
+  private createClient(formData: any) {
     this.cardsService
-      .createCard(formData)
+      .createCard({ template: 'Тестовый', ...formData })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          this.loading = false;
-          this.showModal = false;
+          this.handleSuccess('Client created successfully!');
           this.clientCreated.emit();
-          alert('Client created successfully!');
         },
         error: (err) => {
-          this.loading = false;
-          this.error = 'Error creating client';
-          console.error('Create client error:', err);
+          this.handleError('Error creating client', err);
         },
       });
+  }
+
+  private updateClient(userId: number, updateData: any) {
+    this.cardsService
+      .updateCard(userId.toString(), updateData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.handleSuccess('Client updated successfully!');
+          this.clientUpdated.emit();
+        },
+        error: (err) => {
+          this.handleError('Error updating client', err);
+        },
+      });
+  }
+
+  private handleSuccess(message: string) {
+    this.loading = false;
+    this.showModal = false;
+    alert(message);
+  }
+
+  private handleError(errorMessage: string, err: any) {
+    this.loading = false;
+    this.error = errorMessage;
+    console.error('Operation error:', err);
+  }
+
+  get isEditMode(): boolean {
+    return !!this.editClient();
+  }
+
+  get modalTitle(): string {
+    return this.isEditMode ? 'Edit Client' : 'Create New Client';
+  }
+
+  get submitButtonText(): string {
+    if (this.loading) {
+      return this.isEditMode ? 'Updating...' : 'Creating...';
+    }
+    return this.isEditMode ? 'Update Client' : 'Create Client';
   }
 
   ngOnDestroy() {

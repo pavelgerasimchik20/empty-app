@@ -3,7 +3,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SearchHelperService } from '../helpers/search-helper.service';
-import { CardsResponse, CreateCardRequest, PushMessage } from '../models/user.model';
+import {
+  CardsResponse,
+  CreateCardRequest,
+  PushMessage,
+} from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -75,6 +79,13 @@ export class CardsService {
   }
 
   deleteCard(userId: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${this.token}/passes/${userId}`)
+    return this.http.delete(`${this.baseUrl}/${this.token}/passes/${userId}`);
+  }
+
+  updateCard(userId: string, updateData: Partial<CreateCardRequest>): Observable<any> {
+    return this.http.put(
+      `${this.baseUrl}/${this.token}/passes/${userId}`,
+      updateData
+    );
   }
 }

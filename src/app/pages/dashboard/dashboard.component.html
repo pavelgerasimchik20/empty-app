@@ -95,10 +95,24 @@
           <td>{{ card.city || "-" }}</td>
           <td>
             <svg
+              class="edit-icon"
+              (click)="$event.stopPropagation(); openEditModal(card)"
+              width="25"
+              height="25"
+              viewBox="0 0 24 24"
+              fill="none"
+              style="margin-right: 8px"
+            >
+              <path
+                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                fill="currentColor"
+              />
+            </svg>
+            <svg
               class="delete-icon"
               (click)="$event.stopPropagation(); deleteCard(card.user_id)"
-              width="30"
-              height="30"
+              width="25"
+              height="25"
               viewBox="0 0 24 24"
               fill="none"
             >
@@ -133,6 +147,8 @@
     [isOpen]="showCreateModal()"
     (clientCreated)="onClientCreated()"
     (closed)="onModalClosed()"
+    [editClient]="selectedClientForEdit()"
+    (clientUpdated)="onClientUpdated()"
   >
   </app-create-client-modal>
 

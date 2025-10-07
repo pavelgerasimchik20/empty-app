@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit {
   selectedClient = signal<any | null>(null);
   showPushModal = signal<boolean>(false);
   showCreateModal = signal<boolean>(false);
+  selectedClientForEdit = signal<Card | null>(null);
 
   ngOnInit() {
     this.loadAllCards();
@@ -180,10 +181,6 @@ export class DashboardComponent implements OnInit {
     this.loadAllCards();
   }
 
-  onModalClosed() {
-    this.showCreateModal.set(false);
-  }
-
   deleteCard(userId: number) {
     this.cardsService
       .deleteCard(userId.toString())
@@ -193,8 +190,27 @@ export class DashboardComponent implements OnInit {
           alert(`user has been deleted (user id: ${userId})`);
         },
         error: (err) => {
-          alert(`error:  ${err.message}`)
-        }
+          alert(`error:  ${err.message}`);
+        },
       });
+  }
+
+  openEditModal(card: Card, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.selectedClientForEdit.set(card);
+    this.showCreateModal.set(true);
+  }
+
+  onClientUpdated() {
+    this.showCreateModal.set(false);
+    this.selectedClientForEdit.set(null);
+    this.loadAllCards(); // Перезагружаем данные
+  }
+
+  onModalClosed() {
+    this.showCreateModal.set(false);
+    this.selectedClientForEdit.set(null);
   }
 }

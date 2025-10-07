@@ -320,7 +320,7 @@ h6 {
   transform: translateY(0);
 }
 
-.delete-icon {
+.delete-icon .edit-icon {
   cursor: pointer;
   font-size: 18px;
   padding: 5px;
@@ -329,6 +329,10 @@ h6 {
 
 .delete-icon:hover {
   color: #e3606d;
+}
+
+.edit-icon:hover {
+  color: #97d315;
 }
 
 
